@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  # the description of deployment
+  name: hello-aspnetcore-deployment
+  labels:
+    app: hello-aspnetcore-pod
+spec:
+  selector:
+    matchLabels:
+      # kubernetes POD that will be targeted by the deployment
+      app: hello-aspnetcore-pod
+  template:
+    metadata:
+      labels:
+        # kubernetes POD label that will be targeted by the deployment
+        app: hello-aspnetcore-pod
+    spec:
+      containers:
+        # the name of the container
+        - name: hello-aspnetcore-container
+          image: mast007/helloaspnetcore:v1
+          imagePullPolicy: "Always"
+          resources:
+            limits:
+              # the max resources used by the container
+              # 128 milibytes that is same as mb memory
+              memory: "128Mi"
+              # 500 mili CPU 0.5 CPU that is 1/2 CPU
+              cpu: "1000m"
+          ports:
+            # the port exposed by the container
+            - containerPort: 80
